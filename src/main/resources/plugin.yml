@@ -1,0 +1,5 @@
+main: fi.videosambo.pluginFramework.spigot.Main
+name: vsPluginFramework
+author: videosambo
+version: ${project.version}
+api-version: 1.16
