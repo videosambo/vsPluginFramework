@@ -2,10 +2,8 @@ package fi.videosambo.pluginFramework.core;
 
 import fi.videosambo.pluginFramework.core.database.DBVar;
 import fi.videosambo.pluginFramework.core.exceptions.DBUndentifiedValueException;
-import fi.videosambo.pluginFramework.spigot.gui.Gui;
-import fi.videosambo.pluginFramework.spigot.gui.GuiClickEvent;
-import fi.videosambo.pluginFramework.spigot.gui.GuiClickEventListener;
-import org.bukkit.Material;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 
@@ -39,6 +37,13 @@ public class Utils {
         return slot > inv.getSize() ? null : slot;
     }
 
+    /**
+     * This method is for DB classes to insert arquments into prepared statement.
+     * @param statement                     Prepared statement variable
+     * @param args                          List of DBVar arguments that have variable and type class
+     * @throws SQLException                 If sql statement fails, throws SQLException
+     * @throws DBUndentifiedValueException  If class does not support value, throws SQLException
+     */
     public static void prepareStatement(PreparedStatement statement, DBVar... args) throws SQLException, DBUndentifiedValueException {
         for (int i = 0; i < args.length; i++) {
             if (args[i].getVal() instanceof String) {
@@ -62,6 +67,29 @@ public class Utils {
             } else if (args[i].getVal() instanceof Timestamp) {
                 statement.setTimestamp(i + 1, (Timestamp) args[i].getVal());
             } else throw new DBUndentifiedValueException("Tried to prepare statement with variable what doesn't exist: " + args[i].getVal().toString());
+        }
+    }
+    private static final String LOC_SPLIT_CHAR = "_";
+
+    /**
+     * This method converts Location to simple String so it can be easily saved
+     * @param loc   Location object that is going to be converted to String
+     * @return      Returns a String that can be converted back to Location
+     */
+    public static String convertLocationToString(Location loc) {
+        return loc.getWorld().getName() + LOC_SPLIT_CHAR + loc.getBlockY() + LOC_SPLIT_CHAR + loc.getBlockY() + LOC_SPLIT_CHAR + loc.getBlockZ();
+    }
+
+    /**
+     * This method converts String to Location
+     * @param loc   String that represents location
+     * @return      Returns a Location
+     */
+    public static Location convertStringToLocation(String loc) {
+        try {
+            return new Location(Bukkit.getWorld(loc.split(LOC_SPLIT_CHAR)[0]), Integer.parseInt(loc.split(LOC_SPLIT_CHAR)[1]), Integer.parseInt(loc.split(LOC_SPLIT_CHAR)[2]), Integer.parseInt(loc.split(LOC_SPLIT_CHAR)[3]));
+        } catch (IndexOutOfBoundsException e) {
+            return null;
         }
     }
 }
