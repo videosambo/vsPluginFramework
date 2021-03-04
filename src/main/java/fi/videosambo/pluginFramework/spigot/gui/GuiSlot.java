@@ -3,6 +3,7 @@ package fi.videosambo.pluginFramework.spigot.gui;
 import fi.videosambo.pluginFramework.core.Handler;
 import fi.videosambo.pluginFramework.spigot.VSItemStack;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,15 @@ public class GuiSlot extends VSItemStack{
         this.displayName = displayName;
         super.setDisplayName(displayName);
         this.material = material;
+        super.setType(material);
+        this.event = event;
+        Handler.getListeners().add(event);
+    }
+    public GuiSlot(ItemStack item, GuiClickEventListener event) {
+        super(item.getType());
+        this.displayName = item.getItemMeta().getDisplayName();
+        super.setDisplayName(displayName);
+        this.material = item.getType();
         super.setType(material);
         this.event = event;
         Handler.getListeners().add(event);

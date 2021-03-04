@@ -18,6 +18,14 @@ public class DatabaseHandler {
     private HikariConfig config;
     private HikariDataSource dataSource;
 
+    /**
+     * Database handler for adding database and handling it. Create new handler for every database that you use.
+     * @param dbHost        Host for database
+     * @param dbPort        Port for database
+     * @param dbDatabase    Database to use
+     * @param dbUser        Database user
+     * @param dbPassword    Database password
+     */
     public DatabaseHandler(String dbHost, int dbPort, String dbDatabase, String dbUser, String dbPassword) {
         this.dbHost = dbHost;
         this.dbPort = dbPort;
@@ -38,11 +46,20 @@ public class DatabaseHandler {
         Handler.getDbHandlers().add(this);
     }
 
+    /**
+     * Method to add additional properties
+     * @param property  Propertyfield name
+     * @param value     Value for property
+     */
     public void setDataSourceProperty(String property, String value) {
         config.addDataSourceProperty(property, value);
         dataSource = new HikariDataSource(config);
     }
 
+    /**
+     * @return Connection
+     * @throws SQLException
+     */
     public Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }

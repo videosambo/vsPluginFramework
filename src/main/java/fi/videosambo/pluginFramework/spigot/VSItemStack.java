@@ -83,4 +83,8 @@ public class VSItemStack extends ItemStack {
         meta.setCustomModelData(modelData);
         super.setItemMeta(meta);
     }
+
+    public String getDisplayName() {
+        return super.getItemMeta().getDisplayName();
+    }
 }
