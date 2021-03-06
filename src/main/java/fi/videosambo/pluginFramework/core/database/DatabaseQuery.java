@@ -45,7 +45,10 @@ public class DatabaseQuery {
         Thread thread = new Thread(returnQuery);
         thread.start();
         thread.join();
-        return returnQuery.getResult();
+        while (returnQuery.getResult() != null) {
+            return returnQuery.getResult();
+        }
+        return null;
     }
 
 }
