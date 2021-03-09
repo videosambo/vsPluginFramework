@@ -1,4 +1,4 @@
 main: fi.videosambo.pluginFramework.proxy.Main
 name: vsPluginFramework
 author: videosambo
-version: 1.0-SNAPSHOT
+version: 1.0-RELEASE
