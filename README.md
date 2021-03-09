@@ -1,5 +1,7 @@
-![Jenkins](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fhub.nat.gs%2Fjenkins%2Fjob%2FvsPluginFramework%2F)
 ![GitHub](https://img.shields.io/github/license/videosambo/vsPluginFramework)
+![Jenkins](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fhub.nat.gs%2Fjenkins%2Fjob%2FvsPluginFramework%2F)
+![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/fi.videosambo/vsPluginFramework?server=https%3A%2F%2Fhub.nat.gs%2Fnexus)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/videosambo/vsPluginFramework)
 
 # vsPluginFramework
 
@@ -20,6 +22,6 @@ Maven Dependency:
 <dependency>
   <groupId>fi.videosambo</groupId>
   <artifactId>vsPluginFramework</artifactId>
-  <version>1.0-RELEASE</version>
+  <version>VERSION</version>
 </dependency>
 ```
