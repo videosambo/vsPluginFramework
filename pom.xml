@@ -6,7 +6,7 @@
 
     <groupId>fi.videosambo</groupId>
     <artifactId>vsPluginFramework</artifactId>
-    <version>1.0.1-RELEASE</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>14</maven.compiler.source>
