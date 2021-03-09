@@ -15,11 +15,13 @@ public class NonReturnQuery implements Runnable{
     private DatabaseHandler handler;
     private String query;
     private DBVar[] args;
+    private boolean isByteStream;
 
-    public NonReturnQuery(DatabaseHandler handler, String query, DBVar... args) {
+    public NonReturnQuery(DatabaseHandler handler, String query, boolean isByteStream, DBVar... args) {
         this.handler = handler;
         this.query = query;
         this.args = args;
+        this.isByteStream = isByteStream;
     }
 
     @Override
@@ -31,7 +33,7 @@ public class NonReturnQuery implements Runnable{
                 stmt.close();
             } else {
                 PreparedStatement statement = handler.getConnection().prepareStatement(query);
-                Utils.prepareStatement(statement, args);
+                Utils.prepareStatement(statement,isByteStream, args);
                 statement.executeQuery();
                 statement.close();
             }

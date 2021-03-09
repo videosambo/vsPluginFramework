@@ -17,11 +17,13 @@ public class ReturnQuery implements Runnable {
     private DatabaseHandler handler;
     private String query;
     private DBVar[] args;
+    private boolean isByteStream;
 
-    public ReturnQuery(DatabaseHandler handler, String query, DBVar... args) {
+    public ReturnQuery(DatabaseHandler handler, String query, boolean isByteStream, DBVar... args) {
         this.handler = handler;
         this.query = query;
         this.args = args;
+        this.isByteStream = isByteStream;
     }
 
     @Override
@@ -34,7 +36,7 @@ public class ReturnQuery implements Runnable {
                     throw new DBNullResultException("Expected result but got nothing while executing " + stmt.toString());
             } else {
                 PreparedStatement statement = handler.getConnection().prepareStatement(query);
-                Utils.prepareStatement(statement, args);
+                Utils.prepareStatement(statement, isByteStream, args);
                 result = statement.executeQuery();
                 if (result == null)
                     throw new DBNullResultException("Expected result but got nothing while executing " + statement.toString());

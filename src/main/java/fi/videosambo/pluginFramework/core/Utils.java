@@ -44,7 +44,7 @@ public class Utils {
      * @throws SQLException                 If sql statement fails, throws SQLException
      * @throws DBUndentifiedValueException  If class does not support value, throws SQLException
      */
-    public static void prepareStatement(PreparedStatement statement, DBVar... args) throws SQLException, DBUndentifiedValueException {
+    public static void prepareStatement(PreparedStatement statement, boolean isByteStream, DBVar... args) throws SQLException, DBUndentifiedValueException {
         for (int i = 0; i < args.length; i++) {
             if (args[i].getVal() instanceof String) {
                 statement.setString(i + 1, (String) args[i].getVal());
@@ -57,7 +57,10 @@ public class Utils {
             } else if (args[i].getVal() instanceof Array) {
                 statement.setArray(i + 1, (Array) args[i].getVal());
             } else if (args[i].getVal() instanceof InputStream) {
-                statement.setAsciiStream(i + 1, (InputStream) args[i].getVal());
+                if (isByteStream)
+                    statement.setBinaryStream(i + 1, (InputStream) args[i].getVal());
+                else
+                    statement.setAsciiStream(i + 1, (InputStream) args[i].getVal());
             } else if (args[i].getVal() instanceof BigDecimal) {
                 statement.setBigDecimal(i + 1, (BigDecimal) args[i].getVal());
             } else if (args[i].getVal() instanceof Time) {
