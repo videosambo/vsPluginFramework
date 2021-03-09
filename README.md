@@ -5,6 +5,8 @@
 
 # vsPluginFramework
 
+### This is a DEV branch, see master branch for stable build!
+
 vsPluginFramework or videosambo's plugin framework is core plugin for videosambo's bukkit/spigot/paper or bungeecord plugins.
 
 This library is for my own use but if you want to use it. Just do it.
