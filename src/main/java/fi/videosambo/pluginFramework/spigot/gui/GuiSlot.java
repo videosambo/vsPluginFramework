@@ -1,6 +1,5 @@
 package fi.videosambo.pluginFramework.spigot.gui;
 
-import fi.videosambo.pluginFramework.core.Handler;
 import fi.videosambo.pluginFramework.spigot.VSItemStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -8,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 
 public class GuiSlot extends VSItemStack{
+
+    private static ArrayList<GuiClickEventListener> listeners = new ArrayList<>();
 
     private GuiClickEventListener event;
 
@@ -23,7 +24,7 @@ public class GuiSlot extends VSItemStack{
         this.material = material;
         super.setType(material);
         this.event = event;
-        Handler.getListeners().add(event);
+        listeners.add(event);
     }
     public GuiSlot(ItemStack item, GuiClickEventListener event) {
         super(item.getType());
@@ -32,11 +33,11 @@ public class GuiSlot extends VSItemStack{
         this.material = item.getType();
         super.setType(material);
         this.event = event;
-        Handler.getListeners().add(event);
+        listeners.add(event);
     }
 
     public void click(GuiClickEvent e) {
-        for(GuiClickEventListener event : Handler.getListeners()) {
+        for(GuiClickEventListener event : listeners) {
             if (event == this.event) {
                 event.onClick(e);
             }

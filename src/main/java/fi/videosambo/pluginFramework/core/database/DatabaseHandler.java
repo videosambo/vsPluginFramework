@@ -2,7 +2,6 @@ package fi.videosambo.pluginFramework.core.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import fi.videosambo.pluginFramework.core.Handler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -43,7 +42,6 @@ public class DatabaseHandler {
 
         dataSource = new HikariDataSource(config);
 
-        Handler.getDbHandlers().add(this);
     }
 
     /**

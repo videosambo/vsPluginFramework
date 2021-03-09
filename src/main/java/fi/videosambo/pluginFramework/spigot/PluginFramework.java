@@ -1,6 +1,5 @@
 package fi.videosambo.pluginFramework.spigot;
 
-import fi.videosambo.pluginFramework.core.Handler;
 import fi.videosambo.pluginFramework.core.database.DatabaseHandler;
 import fi.videosambo.pluginFramework.core.stats.StatHandler;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,18 +15,11 @@ public class PluginFramework extends JavaPlugin {
     public void onEnable() {
         instance = this;
         stats = new StatHandler();
-        Handler.setHandler(this);
     }
 
     @Override
     public void onDisable() {
-        for (DatabaseHandler dbHandler : Handler.getDbHandlers()) {
-            try {
-                dbHandler.getConnection().close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
+
     }
 
     public PluginFramework getInstance() {
