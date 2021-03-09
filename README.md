@@ -16,7 +16,7 @@ Maven Repository:
 ```
 
 Maven Dependency:
-```
+```xml
 <dependency>
   <groupId>fi.videosambo</groupId>
   <artifactId>vsPluginFramework</artifactId>
