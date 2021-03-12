@@ -30,6 +30,20 @@ public class DatabaseQuery {
     }
 
     /**
+     * Static method to run database queries that does not return output
+     *
+     * For every argument, use ? as a placeholder
+     *
+     * @param dbHandler DatabaseHandler
+     * @param query query string
+     * @param args  Arguments for query
+     */
+    public static void nonReturnQuery(DatabaseHandler dbHandler, String query, DBVar... args) {
+        Thread thread = new Thread(new NonReturnQuery(dbHandler,query,false,args));
+        thread.start();
+    }
+
+    /**
      * Method to run database queries that does not return output
      *
      * For every argument, use ? as a placeholder
@@ -41,6 +55,29 @@ public class DatabaseQuery {
     public void nonReturnQuery(String query, boolean isByteStream, DBVar... args) {
         Thread thread = new Thread(new NonReturnQuery(handler,query,isByteStream,args));
         thread.start();
+    }
+
+    /**
+     * Static method to run database quaries that returns a value
+     * After executing, remember to close connection
+     *
+     * For every argument, use ? as a placeholder
+     *
+     * @param dbHandler DatabaseHandler
+     * @param query         query string
+     * @param args          arguments for query
+     * @return ResultSet
+     * @throws InterruptedException Database query thread
+     */
+    public static ResultSet returnQuery(DatabaseHandler dbHandler, String query, DBVar... args) throws InterruptedException {
+        ReturnQuery returnQuery = new ReturnQuery(dbHandler,query,false,args);
+        Thread thread = new Thread(returnQuery);
+        thread.start();
+        thread.join();
+        while (returnQuery.getResult() != null) {
+            return returnQuery.getResult();
+        }
+        return null;
     }
 
     /**
