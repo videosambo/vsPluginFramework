@@ -24,8 +24,8 @@ public class DatabaseQuery {
      * @param query query string
      * @param args  Arguments for query
      */
-    public void nonReturnQuery(String query, DBVar... args) {
-        Thread thread = new Thread(new NonReturnQuery(handler,query,false,args));
+    public void nonReturnQuery(QueryType type, String query, DBVar... args) {
+        Thread thread = new Thread(new NonReturnQuery(type,handler,query,false,args));
         thread.start();
     }
 
@@ -38,8 +38,8 @@ public class DatabaseQuery {
      * @param query query string
      * @param args  Arguments for query
      */
-    public static void nonReturnQuery(DatabaseHandler dbHandler, String query, DBVar... args) {
-        Thread thread = new Thread(new NonReturnQuery(dbHandler,query,false,args));
+    public static void nonReturnQuery(QueryType type, DatabaseHandler dbHandler, String query, DBVar... args) {
+        Thread thread = new Thread(new NonReturnQuery(type,dbHandler,query,false,args));
         thread.start();
     }
 
@@ -52,8 +52,8 @@ public class DatabaseQuery {
      * @param args  Arguments for query
      * @param isByteStream If inserted InputStream is either bytestream or asciistream
      */
-    public void nonReturnQuery(String query, boolean isByteStream, DBVar... args) {
-        Thread thread = new Thread(new NonReturnQuery(handler,query,isByteStream,args));
+    public void nonReturnQuery(QueryType type, String query, boolean isByteStream, DBVar... args) {
+        Thread thread = new Thread(new NonReturnQuery(type,handler,query,isByteStream,args));
         thread.start();
     }
 
@@ -69,8 +69,8 @@ public class DatabaseQuery {
      * @return ResultSet
      * @throws InterruptedException Database query thread
      */
-    public static ResultSet returnQuery(DatabaseHandler dbHandler, String query, DBVar... args) throws InterruptedException {
-        ReturnQuery returnQuery = new ReturnQuery(dbHandler,query,false,args);
+    public static ResultSet returnQuery(QueryType type, DatabaseHandler dbHandler, String query, DBVar... args) throws InterruptedException {
+        ReturnQuery returnQuery = new ReturnQuery(type,dbHandler,query,false,args);
         Thread thread = new Thread(returnQuery);
         thread.start();
         thread.join();
@@ -91,8 +91,8 @@ public class DatabaseQuery {
      * @return ResultSet
      * @throws InterruptedException Database query thread
      */
-    public ResultSet returnQuery(String query, DBVar... args) throws InterruptedException {
-        ReturnQuery returnQuery = new ReturnQuery(handler,query,false,args);
+    public ResultSet returnQuery(QueryType type, String query, DBVar... args) throws InterruptedException {
+        ReturnQuery returnQuery = new ReturnQuery(type, handler,query,false,args);
         Thread thread = new Thread(returnQuery);
         thread.start();
         thread.join();
@@ -114,8 +114,8 @@ public class DatabaseQuery {
      * @return ResultSet
      * @throws InterruptedException Database query thread
      */
-    public ResultSet returnQuery(String query, boolean isByteStream, DBVar... args) throws InterruptedException {
-        ReturnQuery returnQuery = new ReturnQuery(handler,query,isByteStream,args);
+    public ResultSet returnQuery(QueryType type, String query, boolean isByteStream, DBVar... args) throws InterruptedException {
+        ReturnQuery returnQuery = new ReturnQuery(type, handler,query,isByteStream,args);
         Thread thread = new Thread(returnQuery);
         thread.start();
         thread.join();

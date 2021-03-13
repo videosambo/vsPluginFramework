@@ -44,6 +44,8 @@ public class DatabaseHandler {
 
     }
 
+    //TODO move prepareStatement method here
+
     /**
      * Method to add additional properties
      * @param property  Propertyfield name

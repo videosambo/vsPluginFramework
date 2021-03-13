@@ -3,6 +3,7 @@ package fi.videosambo.pluginFramework.core.database.query;
 import fi.videosambo.pluginFramework.core.Utils;
 import fi.videosambo.pluginFramework.core.database.DBVar;
 import fi.videosambo.pluginFramework.core.database.DatabaseHandler;
+import fi.videosambo.pluginFramework.core.database.QueryType;
 import fi.videosambo.pluginFramework.core.exceptions.DBNullResultException;
 import fi.videosambo.pluginFramework.core.exceptions.DBUndentifiedValueException;
 
@@ -15,12 +16,14 @@ public class ReturnQuery implements Runnable {
 
     private ResultSet result;
     private DatabaseHandler handler;
+    private QueryType type;
     private String query;
     private DBVar[] args;
     private boolean isByteStream;
 
-    public ReturnQuery(DatabaseHandler handler, String query, boolean isByteStream, DBVar... args) {
+    public ReturnQuery(QueryType type,DatabaseHandler handler, String query, boolean isByteStream, DBVar... args) {
         this.handler = handler;
+        this.type = type;
         this.query = query;
         this.args = args;
         this.isByteStream = isByteStream;
@@ -31,13 +34,19 @@ public class ReturnQuery implements Runnable {
         try {
             if (args == null) {
                 Statement stmt = handler.getConnection().createStatement();
-                result = stmt.executeQuery(query);
+                if (type.equals(QueryType.UPDATE))
+                    stmt.executeUpdate(query);
+                else
+                    stmt.executeQuery(query);
                 if (result == null)
                     throw new DBNullResultException("Expected result but got nothing while executing " + stmt.toString());
             } else {
                 PreparedStatement statement = handler.getConnection().prepareStatement(query);
                 Utils.prepareStatement(statement, isByteStream, args);
-                result = statement.executeQuery();
+                if (type.equals(QueryType.UPDATE))
+                    statement.executeUpdate(query);
+                else
+                    statement.executeQuery(query);
                 if (result == null)
                     throw new DBNullResultException("Expected result but got nothing while executing " + statement.toString());
             }
